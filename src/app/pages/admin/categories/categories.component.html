@@ -1,0 +1,30 @@
+<div *ngIf="showModal">
+    <ngx-new-category (btnSave)="showModal = !$event"></ngx-new-category>
+</div>
+
+<nb-card *ngIf="!showModal">
+    <nb-card-header>
+      Categories
+    </nb-card-header>
+  
+    <nb-card-body>
+        <!-- Search -->
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-9">
+                <div class="form-group">
+                    <div class="form-group">
+                        <input type="text" nbInput fullWidth id="inputSearch" placeholder="Buscar">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-4 col-xs-3">
+                <button nbButton status="primary" outline class="float-right" (click)="addCategory()">
+                    <nb-icon icon="plus-outline"></nb-icon>
+                </button>
+            </div>
+        </div>
+        <ng2-smart-table [settings]="settings" [source]="source" 
+                        (delete)="onDelete($event)" (edit)="addCategory($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

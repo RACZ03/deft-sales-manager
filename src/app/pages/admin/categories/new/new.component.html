@@ -1,0 +1,32 @@
+<nb-card>
+    <nb-card-header>
+        Nueva Caja
+        <button nbButton class="float-right" (click)="save()">
+            <nb-icon class="action-icon" icon="close-circle-outline"></nb-icon>
+        </button>
+    </nb-card-header>
+    <nb-card-body>
+        <!-- Name & Ubicacion -->
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputName" class="label">Nombre</label>
+                    <input type="text" nbInput fullWidth id="inputName" placeholder="Nombre">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputUbication" class="label">Ubicaci&oacute;;n</label>
+                    <input type="number" nbInput fullWidth id="inputUbication" placeholder="Ubicación">
+                </div>
+            </div>
+        </div>
+        <br>
+        <button nbButton status="primary" outline class="float-right" (click)="save()">
+            Guardar
+        </button>
+        <button nbButton status="danger" outline class="float-right mr-4" (click)="save()">
+            Cancelar
+        </button>
+    </nb-card-body>
+</nb-card>

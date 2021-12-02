@@ -1,0 +1,101 @@
+<nb-card>
+    <nb-card-header>
+        Nuevo Cliente
+        <button nbButton class="float-right" (click)="save()">
+            <nb-icon class="action-icon" icon="close-circle-outline"></nb-icon>
+        </button>
+    </nb-card-header>
+    <nb-card-body>
+        <!-- Tipo Doc & Number Doc -->
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="inputDocumentType" class="label">Tipo Documento</label>
+                <div class="form-group">
+                    <nb-select id="inputDocumentType" selected="0" style="width: 100%; max-width: 100%;">
+                        <nb-option value="0">Seleccione el tipo de documento</nb-option>
+                        <nb-option value="1">Option 1</nb-option>
+                        <nb-option value="2">Option 2</nb-option>
+                        <nb-option value="3">Option 3</nb-option>
+                    </nb-select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputNumberDoc" class="label">N&uacute;mero Documento</label>
+                    <input type="text" nbInput fullWidth id="inputUbication" placeholder="Número Documento">
+                </div>
+            </div>
+        </div>
+        <!-- Name & Surname -->
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputName" class="label">Nombre</label>
+                    <input type="text" nbInput fullWidth id="inputName" placeholder="Nombre">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputSurname" class="label">Apellido</label>
+                    <input type="text" nbInput fullWidth id="inputSurname" placeholder="Apellido">
+                </div>
+            </div>
+        </div>
+        <!-- Department & Municipality -->
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="inputDepartment" class="label">Departamento</label>
+                <div class="form-group">
+                    <nb-select id="inputDepartment" selected="0" style="width: 100%; max-width: 100%;">
+                        <nb-option value="0">Seleccione el Departamento</nb-option>
+                        <nb-option value="1">Option 1</nb-option>
+                        <nb-option value="2">Option 2</nb-option>
+                        <nb-option value="3">Option 3</nb-option>
+                    </nb-select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label for="inputMunicipality" class="label">Municipio</label>
+                <div class="form-group">
+                    <nb-select id="inputMunicipality" selected="0" style="width: 100%; max-width: 100%;">
+                        <nb-option value="0">Seleccione el Municipio</nb-option>
+                        <nb-option value="1">Option 1</nb-option>
+                        <nb-option value="2">Option 2</nb-option>
+                        <nb-option value="3">Option 3</nb-option>
+                    </nb-select>
+                </div>
+            </div>
+        </div>
+        <!-- Address -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="inputAddress" class="label">Direccion</label>
+                    <input type="text" nbInput fullWidth id="inputAddress" placeholder="Direccion">
+                </div>
+            </div>
+        </div>
+        <!-- Phone & Email -->
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputPhoneNumber" class="label">Tel&eacute;fono</label>
+                    <input type="number" nbInput fullWidth id="inputPhoneNumber" placeholder="Teléfono">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputEmail" class="label">Email</label>
+                    <input type="text" nbInput fullWidth id="inputEmail" placeholder="Email">
+                </div>
+            </div>
+        </div>
+        <br>
+        <button nbButton status="primary" outline class="float-right" (click)="save()">
+            Guardar
+        </button>
+        <button nbButton status="danger" outline class="float-right mr-4" (click)="save()">
+            Cancelar
+        </button>
+    </nb-card-body>
+</nb-card>

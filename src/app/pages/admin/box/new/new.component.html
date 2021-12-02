@@ -1,0 +1,48 @@
+<nb-card>
+    <nb-card-header>
+        Nueva Caja
+        <button nbButton class="float-right" (click)="save()">
+            <nb-icon class="action-icon" icon="close-circle-outline"></nb-icon>
+        </button>
+    </nb-card-header>
+    <nb-card-body>
+        <!-- Code & Number -->
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="inputCode" class="label">Código</label>
+                <div class="form-group row">
+                    <img src="../../../assets/images/code.png" alt="codigo.png" class="col-4" style="height: 40px;">
+                    <input type="text" class="col-8" nbInput fullWidth id="inputCode" placeholder="Código">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputNumber" class="label">N&uacute;mero</label>
+                    <input type="text" nbInput fullWidth id="inputNumber" placeholder="Número">
+                </div>
+            </div>
+        </div>
+        <!-- Stock & Presentation -->
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputName" class="label">Nombre</label>
+                    <input type="text" nbInput fullWidth id="inputName" placeholder="Nombre">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputCash" class="label">Efectivo</label>
+                    <input type="number" nbInput fullWidth id="inputCash" placeholder="Efectivo">
+                </div>
+            </div>
+        </div>
+        <br>
+        <button nbButton status="primary" outline class="float-right" (click)="save()">
+            Guardar
+        </button>
+        <button nbButton status="danger" outline class="float-right mr-4" (click)="save()">
+            Cancelar
+        </button>
+    </nb-card-body>
+</nb-card>
