@@ -9,6 +9,8 @@ export class NewComponent implements OnInit {
 
   public valueExpiration = 1;
   public valueWarranty = 0;
+  public title: string = 'Nuevo Producto';
+  
   @Output() btnSave = new EventEmitter<boolean>();
 
   constructor() { }
