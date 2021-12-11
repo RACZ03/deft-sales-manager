@@ -16,26 +16,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly: boolean = false;
   user: any = { name: 'James Lucas', picture: './assets/images/nick.png' };
 
-  themes = [
-    {
-      value: 'default',
-      name: 'Light',
-    },
-    {
-      value: 'dark',
-      name: 'Dark',
-    },
-    {
-      value: 'cosmic',
-      name: 'Cosmic',
-    },
-    {
-      value: 'corporate',
-      name: 'Corporate',
-    },
-  ];
+  themeName  = '';
+  public btnSwitch: boolean = false;
 
-  currentTheme = 'default';
+  defaultTheme = 'default';
 
   userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
 
@@ -47,7 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.currentTheme = this.themeService.currentTheme;
+    this.defaultTheme = this.themeService.currentTheme;
 
     // this.userService.getUsers()
     //   .pipe(takeUntil(this.destroy$))
@@ -63,11 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
 
     this.themeService.onThemeChange()
-      .pipe(
-        map(({ name }) => name),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(themeName => this.currentTheme = themeName);
+      .subscribe(themeName => this.defaultTheme = themeName);
   }
 
   ngOnDestroy() {
@@ -75,8 +55,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  changeTheme(themeName: string) {
-    this.themeService.changeTheme(themeName);
+  // cambiar tema según toggle
+  changeTheme(){
+    this.btnSwitch = !this.btnSwitch;
+    
+    if(this.btnSwitch){
+      this.themeName = 'dark';
+    }else{
+      this.themeName = 'default'
+    }
+    this.themeService.changeTheme(this.themeName);
   }
 
   toggleSidebar(): boolean {
@@ -85,6 +73,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     return false;
   }
+
 
   navigateHome() {
     this.menuService.navigateHome();
