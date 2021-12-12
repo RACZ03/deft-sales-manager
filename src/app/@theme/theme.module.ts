@@ -36,6 +36,7 @@ import {
 } from './layouts';
 import { DEFAULT_THEME } from './styles/theme.default';
 import { DARK_THEME } from './styles/theme.dark';
+import { FilterPipe } from './pipes/filter.pipe';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -66,12 +67,13 @@ const PIPES = [
   RoundPipe,
   TimingPipe,
   NumberWithCommasPipe,
+  FilterPipe
 ];
 
 @NgModule({
   imports: [CommonModule, ...NB_MODULES],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
-  declarations: [...COMPONENTS, ...PIPES],
+  declarations: [...COMPONENTS, ...PIPES ],
 })
 export class ThemeModule {
   static forRoot(): ModuleWithProviders<ThemeModule> {

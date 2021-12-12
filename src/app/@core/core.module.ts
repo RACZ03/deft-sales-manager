@@ -6,11 +6,7 @@ import { of as observableOf } from 'rxjs';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import {
-  AnalyticsService,
   LayoutService,
-  PlayerService,
-  SeoService,
-  StateService,
 } from './utils';
 
 const socialLinks = [
@@ -31,9 +27,6 @@ const socialLinks = [
   },
 ];
 
-const DATA_SERVICES = [
-];
-
 export class NbSimpleRoleProvider extends NbRoleProvider {
   getRole() {
     // here you could provide any role based on any auth flow
@@ -42,8 +35,6 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
 }
 
 export const NB_CORE_PROVIDERS = [
-  // ...MockDataModule.forRoot().providers,
-  ...DATA_SERVICES,
   ...NbAuthModule.forRoot({
 
     strategies: [
@@ -79,11 +70,7 @@ export const NB_CORE_PROVIDERS = [
   {
     provide: NbRoleProvider, useClass: NbSimpleRoleProvider,
   },
-  AnalyticsService,
   LayoutService,
-  PlayerService,
-  SeoService,
-  StateService,
 ];
 
 @NgModule({

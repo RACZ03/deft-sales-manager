@@ -16,6 +16,8 @@ import {
 } from '@nebular/theme';
 import { NewComponent } from './new/new.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ComponentsModule } from '../../components/components.module';
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     CommonModule,
     ProductsRoutingModule,
     ThemeModule,
+    ReactiveFormsModule,
     NbCardModule,
     NbInputModule,
     NbButtonModule,
@@ -35,7 +38,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NbDatepickerModule,
     Ng2SmartTableModule,
     NbIconModule,
-    NbActionsModule
+    NbActionsModule,
+    ComponentsModule
   ]
 })
 export class ProductsModule { }
