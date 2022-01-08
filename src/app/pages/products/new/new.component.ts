@@ -7,23 +7,23 @@ import { CategoryService } from '../../../services/category.service';
 import { SupplierService } from '../../../services/supplier.service';
 import { MarkService } from '../../../services/mark.service';
 import { ModelService } from '../../../services/model.service';
-import { ProductI } from '../../../interfaces/interfaces';
+import { ProductI } from '../../../interfaces/product';
 
 @Component({
   selector: 'ngx-new-product',
   templateUrl: './new.component.html',
-  styleUrls: ['./new.component.scss']
+  styleUrls: ['./new.component.scss'],
 })
 export class NewComponent implements OnInit {
 
   public valueExpiration = 1;
   public valueWarranty = 0;
   public title: string = 'Nuevo Producto';
-  
+
   @Output() btnSave = new EventEmitter<boolean>();
   @Input() product: ProductI;
 
-  public code: Number = parseInt(this.productSvc.getCode());
+  public code: Number = parseInt(this.productSvc.getCode(), 0);
   public productForm = this.fb.group({
     code: [{value: this.code, disabled: true}, Validators.required ],
     name: ['', Validators.required],
@@ -42,7 +42,7 @@ export class NewComponent implements OnInit {
     categoryId: [null, Validators.required ],
     modelId: [null],
     markId: [null],
-  })
+  });
 
   constructor(
     private fb: FormBuilder,
@@ -52,13 +52,13 @@ export class NewComponent implements OnInit {
     public categorySvc: CategoryService,
     public supplierSvc: SupplierService,
     public markSvc: MarkService,
-    public modelSvc: ModelService
-  ) { 
+    public modelSvc: ModelService,
+  ) {
   }
 
   ngOnInit(): void {
     if ( this.product !== undefined && this.product?.id > 0 ) {
-      let copy = {...this.product};
+      const copy = {...this.product};
       delete copy.id;
       this.productForm.setValue(copy);
     }
@@ -68,12 +68,13 @@ export class NewComponent implements OnInit {
     const newProduct: ProductI = {
       id: this.product?.id,
       code: this.code,
-      ...this.productForm.value
-    }
+      ...this.productForm.value,
+    };
+
     this.productSvc.createAndUpdate(newProduct).subscribe( resp => {
       if ( resp.code === 200 ) {
-        let message = newProduct?.id === undefined ? 'Producto agregado' : 'Actualizacion realizada'
-    
+        const message = newProduct?.id === undefined ? 'Producto agregado' : 'Actualizacion realizada';
+
         this.toastrSVC.showToast('success', 'topR', 'Éxito', 3000, message);
       } else {
         this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se registro el producto');
@@ -81,10 +82,10 @@ export class NewComponent implements OnInit {
       this.btnSave.emit(true);
     });
   }
-  
+
   onReset(): void {
     this.productForm.reset();
-    this.btnSave.emit(true);
+    this.btnSave.emit(false);
   }
 
   isValidField(name: string): boolean {

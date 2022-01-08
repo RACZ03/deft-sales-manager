@@ -4,7 +4,7 @@ import { NbDialogRef } from '@nebular/theme';
 @Component({
   selector: 'ngx-modal-delete',
   templateUrl: './modal-delete.component.html',
-  styleUrls: ['./modal-delete.component.scss']
+  styleUrls: ['./modal-delete.component.scss'],
 })
 export class ModalDeleteComponent {
 

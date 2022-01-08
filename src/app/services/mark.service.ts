@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { MarkI } from '../interfaces/interfaces';
+import { MarkI } from '../interfaces/mark';
 
 @Injectable({
   providedIn: 'root'
