@@ -1,0 +1,18 @@
+
+<nb-card>
+    <nb-card-header>
+        {{ title }}: {{ product?.name }}
+    </nb-card-header>
+    <nb-card-body>
+        <div class="div_code">
+            <img src="../../../../assets/images/code.png" alt=""><br>
+            <p class="text-center"><strong>{{ product?.code }}</strong></p>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <div style="float:right;">
+            <button nbButton status="primary" class="mr-1"  size="small" (click)="onPrint()">Imprimir</button>
+            <button nbButton class="cancel" status="danger" size="small" (click)="onClose()">Cancelar</button>
+        </div>
+    </nb-card-footer>
+</nb-card>

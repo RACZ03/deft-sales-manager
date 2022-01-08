@@ -4,26 +4,27 @@ import { ProductsComponent } from './products.component';
 import { ProductsRoutingModule } from './products-routing.module';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import { 
+import {
   NbActionsModule,
-  NbButtonModule, 
-  NbCardModule, 
-  NbDatepickerModule, 
-  NbIconModule, 
-  NbInputModule, 
-  NbRadioModule, 
-  NbSelectModule, 
+  NbButtonModule,
+  NbCardModule,
+  NbDatepickerModule,
+  NbIconModule,
+  NbInputModule,
+  NbRadioModule,
+  NbSelectModule,
 } from '@nebular/theme';
 import { NewComponent } from './new/new.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '../../components/components.module';
-
+import { ProductDetailComponent } from './detail/detail.component';
 
 @NgModule({
   declarations: [
     ProductsComponent,
-    NewComponent
+    NewComponent,
+    ProductDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +40,7 @@ import { ComponentsModule } from '../../components/components.module';
     Ng2SmartTableModule,
     NbIconModule,
     NbActionsModule,
-    ComponentsModule
-  ]
+    ComponentsModule,
+  ],
 })
 export class ProductsModule { }

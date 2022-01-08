@@ -1,13 +1,13 @@
 
-<div *ngIf="showModal">
-    <ngx-new-product [product]="product" (btnSave)="showModal = !$event"></ngx-new-product>
+<div *ngIf="showModalNew">
+    <ngx-new-product [product]="product" (btnSave)="closeModel($event)"></ngx-new-product>
 </div>
 
-<nb-card *ngIf="!showModal">
+<nb-card *ngIf="!showModalNew">
     <nb-card-header>
       Productos
         <button nbButton status="primary" outline class="float-right" size="small"
-                        (click)="addProduct()" title="Agregar producto">
+                        (click)="openModal()" title="Agregar producto">
             <nb-icon icon="plus-outline"></nb-icon>
             Nuevo
         </button>
