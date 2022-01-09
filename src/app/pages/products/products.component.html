@@ -5,12 +5,14 @@
 
 <nb-card *ngIf="!showModalNew">
     <nb-card-header>
-      Productos
         <button nbButton status="primary" outline class="float-right" size="small"
                         (click)="openModal()" title="Agregar producto">
             <nb-icon icon="plus-outline"></nb-icon>
             Nuevo
         </button>
+        <h6 class="mt-2">
+            Productos
+        </h6>
     </nb-card-header>
   
     <nb-card-body>

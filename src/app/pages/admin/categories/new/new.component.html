@@ -1,32 +1,36 @@
 <nb-card>
     <nb-card-header>
-        Nueva Caja
-        <button nbButton class="float-right" (click)="save()">
+        <button nbButton class="float-right" (click)="onClose()">
             <nb-icon class="action-icon" icon="close-circle-outline"></nb-icon>
         </button>
+        <h6 class="mt-2">
+            {{ title }}
+        </h6>
     </nb-card-header>
     <nb-card-body>
-        <!-- Name & Ubicacion -->
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="inputName" class="label">Nombre</label>
-                    <input type="text" nbInput fullWidth id="inputName" placeholder="Nombre">
+        <form  novalidate [formGroup]="categoryForm">
+            <!-- Name -->
+            <div class="form-group">
+                <label for="inputName" class="label"><span class="text-danger">* </span>Nombre</label>
+                <input type="text" nbInput fullWidth id="inputName" placeholder="Nombre"
+                               formControlName="name" [status]="isValidField('name') ? 'danger' : 'basic'">
+                <div [ngClass]="isValidField('name') ? '' : 'd-none'">
+                    <label for="" class="text-danger text-alert">El nombre de la categoría es requerido</label>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="inputUbication" class="label">Ubicaci&oacute;;n</label>
-                    <input type="number" nbInput fullWidth id="inputUbication" placeholder="Ubicación">
-                </div>
+            <!-- Ubication -->
+            <div class="form-group">
+                <label for="inputUbication" class="label">Ubicaci&oacute;n</label>
+                <input type="text" nbInput fullWidth id="inputName" placeholder="Ubicacián"
+                               formControlName="ubication">
             </div>
-        </div>
-        <br>
-        <button nbButton status="primary" outline class="float-right" (click)="save()">
-            Guardar
-        </button>
-        <button nbButton status="danger" outline class="float-right mr-4" (click)="save()">
-            Cancelar
-        </button>
+            <br>
+            <button nbButton status="primary" outline class="float-right" size="small" [disabled]="!categoryForm.valid" (click)="save()"> 
+                Guardar
+            </button>
+            <button nbButton status="danger" outline class="float-right mr-4" size="small" (click)="onClose()">
+                Cancelar
+            </button>
+        </form>
     </nb-card-body>
 </nb-card>

@@ -36,6 +36,7 @@ export class ProductsComponent implements OnInit {
     },
     actions: {
       title: 'Acciones',
+      columnTitle: 'Acciones',
       add: false,      //  if you want to remove add button
       edit: false,     //  if you want to remove edit button
       delete: false, //  if you want to remove delete button
@@ -63,6 +64,10 @@ export class ProductsComponent implements OnInit {
       name: {
         title: 'Nombre',
         type: 'string',
+      },
+      stock: {
+        title: 'Existencia',
+        type: 'number',
       },
       salePrice: {
         title: 'Precio',
@@ -93,7 +98,6 @@ export class ProductsComponent implements OnInit {
 
   loadTable(band: boolean) { // Remove flag when integrating the api
     this.data = this.productSvc.getAll(band);
-    this.data = [ ...this.data ];
     this.source.load(this.data);
   }
 
