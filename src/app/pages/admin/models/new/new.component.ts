@@ -40,10 +40,10 @@ export class NewModelComponent implements OnInit {
       ...this.modelForm.value,
       status: this.model?.status === undefined ? true : this.model?.status,
     };
+    const message = newModel?.id === undefined ? 'Modelp agregado' : 'Actualizacion realizada';
 
     this.modelSvc.createAndUpdate(newModel).subscribe( resp => {
       if ( resp.code === 200 ) {
-        const message = newModel?.id === undefined ? 'Modelp agregado' : 'Actualizacion realizada';
 
         this.toastrSvc.showToast('success', 'topR', 'Éxito', 3000, message);
       } else {
