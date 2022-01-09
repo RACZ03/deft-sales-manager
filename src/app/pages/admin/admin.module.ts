@@ -17,6 +17,8 @@ import { NewUserComponent } from './users/new/new.component';
 import { CustomersComponent } from './customers/customers.component';
 import { SupplierComponent } from './supplier/supplier.component';
 import { UsersComponent } from './users/users.component';
+import { ModelsComponent } from './models/models.component';
+import { NewModelComponent } from './models/new/new.component';
 
 
 
@@ -28,11 +30,13 @@ import { UsersComponent } from './users/users.component';
     CustomersComponent,
     SupplierComponent,
     UsersComponent,
+    ModelsComponent,
     NewBoxComponent,
     NewCategoryComponent,
     NewCustomerComponent,
     NewSupplierComponent,
     NewUserComponent,
+    NewModelComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +48,7 @@ import { UsersComponent } from './users/users.component';
     NbButtonModule,
     Ng2SmartTableModule,
     NbIconModule,
-    NbSelectModule
-  ]
+    NbSelectModule,
+  ],
 })
 export class AdminModule { }
