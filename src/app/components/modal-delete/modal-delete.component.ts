@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 
 @Component({
@@ -8,6 +8,7 @@ import { NbDialogRef } from '@nebular/theme';
 })
 export class ModalDeleteComponent {
 
+  @Input() question: string = 'Desea eliminar el registro';
   constructor(protected ref: NbDialogRef<ModalDeleteComponent>) {}
 
   submit(band: boolean) {

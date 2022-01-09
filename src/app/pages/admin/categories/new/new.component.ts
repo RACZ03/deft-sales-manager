@@ -8,7 +8,7 @@ import { ToastrService } from '../../../../services/toastr.service';
 @Component({
   selector: 'ngx-new-category',
   templateUrl: './new.component.html',
-  styleUrls: ['./new.component.scss']
+  styleUrls: ['./new.component.scss'],
 })
 export class NewCategoryComponent implements OnInit {
 
@@ -24,14 +24,14 @@ export class NewCategoryComponent implements OnInit {
     private fb: FormBuilder,
     private toastrSvc: ToastrService,
     private categorySvc: CategoryService,
-  ){}
+  ) {}
 
   ngOnInit(): void {
+    console.log('asdas');
     if ( this.category !== undefined && this.category?.id > 0 ) {
-      this.title = 'Editar categoría'
+      this.title = 'Editar categoría';
       const value: NewCategoryI = { name: this.category.name, ubication: this.category.ubication };
-      console.log(value);
-    
+
       this.categoryForm.setValue(value);
     }
   }
@@ -42,14 +42,14 @@ export class NewCategoryComponent implements OnInit {
       ...this.categoryForm.value,
       status: this.category?.status === undefined ? true : this.category?.status,
     };
+    const message = newCategory?.id === undefined ? 'Categoría agregada' : 'Actualización realizada';
 
     this.categorySvc.createAndUpdate(newCategory).subscribe( resp => {
       if ( resp.code === 200 ) {
-        const message = newCategory?.id === undefined ? 'Producto agregado' : 'Actualizacion realizada';
-        
+
         this.toastrSvc.showToast('success', 'topR', 'Éxito', 3000, message);
       } else {
-        this.toastrSvc.showToast('danger', 'topR', 'Error', 3000, 'No se registro el producto');
+        this.toastrSvc.showToast('danger', 'topR', 'Error', 3000, 'No se registro la categoría');
       }
       this.onClose();
     });

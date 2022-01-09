@@ -1,8 +1,5 @@
-<div *ngIf="showModal">
-    <ngx-new-category (btnSave)="showModal = !$event"></ngx-new-category>
-</div>
 
-<nb-card *ngIf="!showModal">
+<nb-card>
     <nb-card-header>
         <button nbButton status="primary" outline class="float-right" (click)="openModalNew()">
             <nb-icon icon="plus-outline"></nb-icon>
