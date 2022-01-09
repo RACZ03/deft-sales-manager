@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
@@ -34,10 +35,10 @@ import { UsersComponent } from './users/users.component';
     NewUserComponent,
   ],
   imports: [
-    FormsModule,
-    ReactiveFormsModule,
+    CommonModule,
     AdminRoutingModule,
     ThemeModule,
+    ReactiveFormsModule,
     NbCardModule,
     NbInputModule,
     NbButtonModule,
