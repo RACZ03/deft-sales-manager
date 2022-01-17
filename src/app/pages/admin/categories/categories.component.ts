@@ -10,13 +10,12 @@ import { ToastrService } from '../../../services/toastr.service';
 @Component({
   selector: 'ngx-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss']
+  styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
 
   @ViewChild('tableCategory') table: Ng2SmartTableComponent;
-  
-  public showModal: boolean = false;
+
   public settings = {
     sort: true,
     // hideSubHeader: true,
@@ -60,13 +59,13 @@ export class CategoriesComponent implements OnInit {
     },
   };
 
-  private source: LocalDataSource = new LocalDataSource();
+  public source: LocalDataSource = new LocalDataSource();
   public data: CategoryI[] = [];
 
   constructor(
     private dialogSvc: NbDialogService,
     private toastrSVC: ToastrService,
-    private categorySvc: CategoryService
+    private categorySvc: CategoryService,
   ) {
     this.loadTable(false);
   }
@@ -84,15 +83,23 @@ export class CategoriesComponent implements OnInit {
 
   onDelete(event): void {
     const id = event['data'].id;
-    this.dialogSvc.open(ModalDeleteComponent)
+    const question: string = event['data'].status ? 'Desea desactivar la categoría' : 'Desea activar la categoría';
+    const message: string = event['data'].status ? 'Categoría desactivada correctamente' : 'Categoría habilitada correctamente';
+    this.dialogSvc.open(ModalDeleteComponent,
+                    {
+                      context: {
+                        question,
+                      },
+                    },
+                  )
                   .onClose.subscribe(resp => {
                     if ( resp ) {
                       this.categorySvc.delete(id).subscribe( resp => {
                         if ( resp.code === 200) {
-                          this.toastrSVC.showToast('success', 'topR', 'Accion exitosa', 3000, 'Producto eliminado');
+                          this.toastrSVC.showToast('success', 'topR', 'Accion exitosa', 3000, message);
                           this.loadTable(true);
                         } else {
-                          this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se elimino el producto');
+                          this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se pudo activa/desactivar la categoría');
                         }
                       });
                     }

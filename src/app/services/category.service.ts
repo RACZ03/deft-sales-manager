@@ -6,16 +6,16 @@ import { CategoryI, DataCategoryI } from '../interfaces/category';
 import { ResponseI } from '../interfaces/response';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
 
   private URL = environment.URL;
-  public $categories: DataCategoryI[] = []
+  public $categories: DataCategoryI[] = [];
 
   constructor(
-    private http: HttpClient
-  ) { 
+    private http: HttpClient,
+  ) {
     this.getAll(false);
   }
 
@@ -65,7 +65,9 @@ export class CategoryService {
     };
     const indice = this.$categories.findIndex( e => e.id === id);
     if ( indice >= 0) {
-      this.$categories[indice].statusText = 'Inactivo';
+      const status =  this.$categories[indice].status;
+      this.$categories[indice].statusText = status ? 'Inactivo' : 'Activo';
+      this.$categories[indice].status = !status;
     }
     // example
     return new Observable( subscribe => subscribe.next(resp) );
