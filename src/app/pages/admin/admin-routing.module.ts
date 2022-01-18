@@ -6,6 +6,7 @@ import { SupplierComponent } from './supplier/supplier.component';
 import { UsersComponent } from './users/users.component';
 import { CustomersComponent } from './customers/customers.component';
 import { AdminComponent } from './admin.components';
+import { ModelsComponent } from './models/models.component';
 
 
 const routes: Routes = [{
@@ -32,7 +33,11 @@ const routes: Routes = [{
       path: 'customers',
       component: CustomersComponent,
     },
-  ]
+    {
+      path: 'models',
+      component: ModelsComponent,
+    },
+  ],
 }];
 
 

@@ -1,0 +1,19 @@
+
+<nb-card>
+    <nb-card-header>
+        <button nbButton status="primary" outline class="float-right" (click)="openModalNew()">
+            <nb-icon icon="plus-outline"></nb-icon>
+            Nuevo
+        </button>
+
+        <h6 class="mt-2">
+            Modelos
+        </h6>
+    </nb-card-header>
+  
+    <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source"  #tableModel
+                        (delete)="onDelete($event)" (edit)="openModalNew($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

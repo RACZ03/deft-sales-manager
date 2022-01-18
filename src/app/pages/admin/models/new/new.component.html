@@ -1,0 +1,30 @@
+<nb-card>
+    <nb-card-header>
+        <button nbButton class="float-right" (click)="onClose()">
+            <nb-icon class="action-icon" icon="close-circle-outline"></nb-icon>
+        </button>
+        <h6 class="mt-2">
+            {{ title }}
+        </h6>
+    </nb-card-header>
+    <nb-card-body>
+        <form  novalidate [formGroup]="modelForm">
+            <!-- Name -->
+            <div class="form-group">
+                <label for="inputName" class="label"><span class="text-danger">* </span>Nombre</label>
+                <input type="text" nbInput fullWidth id="inputName" placeholder="Nombre"
+                               formControlName="name" [status]="isValidField('name') ? 'danger' : 'basic'">
+                <div [ngClass]="isValidField('name') ? '' : 'd-none'">
+                    <label for="" class="text-danger text-alert">El nombre del modelo es requerido</label>
+                </div>
+            </div>
+            <br>
+            <button nbButton status="primary" outline class="float-right" size="small" [disabled]="!modelForm.valid" (click)="save()"> 
+                Guardar
+            </button>
+            <button nbButton status="danger" outline class="float-right mr-4" size="small" (click)="onClose()">
+                Cancelar
+            </button>
+        </form>
+    </nb-card-body>
+</nb-card>
