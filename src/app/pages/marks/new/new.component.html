@@ -1,0 +1,219 @@
+<nb-card>
+    <nb-card-header>
+        <button nbButton class="float-right" (click)="onReset()">
+            <nb-icon class="action-icon" icon="close-circle-outline"></nb-icon>
+        </button>
+        {{ title }}
+    </nb-card-header>
+    <nb-card-body>
+        <form novalidate [formGroup]="productForm">
+            <!-- Code & Name -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="inputCode" class="label">Código</label>
+                    <div class="form-group row">
+                        <img src="../../../assets/images/code.png" alt="codigo.png" class="col-4" style="height: 40px;">
+                        <input type="text" class="col-8" nbInput fullWidth id="inputCode" placeholder="Código"
+                               formControlName="code">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputName" class="label"><span class="text-danger">* </span>Nombre</label>
+                        <input type="text" nbInput fullWidth id="inputName" placeholder="Nombre"
+                               formControlName="name" [status]="isValidField('name') ? 'danger' : 'basic'">
+                        <div [ngClass]="isValidField('name') ? '' : 'd-none'">
+                            <label for="" class="text-danger text-alert">El nombre del producto es requerido</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Description -->
+            <div class="form-group">
+                <label for="inputDescription" class="label"><span class="text-danger">* </span>Descripción</label>
+                <textarea rows="2" nbInput fullWidth placeholder="Descripción del producto" id="inputDescription"
+                          formControlName="description" [status]="isValidField('description') ? 'danger' : 'basic'">
+                </textarea>
+                <div [ngClass]="isValidField('description') ? '' : 'd-none'">
+                    <label for="" class="text-danger text-alert">La descripción es requerida y la longitud minima es de 10 caracteres</label>
+                </div>
+            </div>
+            <!-- Stock & Presentation -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputStock" class="label"><span class="text-danger">* </span>Stock</label>
+                        <input type="number" nbInput fullWidth id="inputStock" placeholder="Existencia"
+                               formControlName="stock" [status]="isValidField('stock') ? 'danger' : 'basic'">
+                        <div [ngClass]="isValidField('stock') ? '' : 'd-none'">
+                            <label for="" class="text-danger text-alert">La existencia del producto es requerida</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputPresentation" class="label">Presentación</label>
+                    <div class="form-group">
+                        <nb-select id="inputPresentation" style="width: 100%; max-width: 100%;" placeholder="Selecciona una presentación"
+                                   formControlName="presentationId">
+                            <nb-option *ngFor="let item of presentationSvc.$presentations" [value]="item?.id">
+                                {{ item.name }}
+                            </nb-option>
+                        </nb-select>
+                    </div>
+                </div>
+            </div>
+            <!-- Price -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputPurchasePrice" class="label"><span class="text-danger">* </span>Precio Compra</label>
+                        <input type="number" nbInput fullWidth id="inputPurchasePrice" placeholder="Precio compra"
+                               formControlName="purchasePrice" [status]="isValidField('purchasePrice') ? 'danger' : 'basic'">
+                        <div [ngClass]="isValidField('purchasePrice') ? '' : 'd-none'">
+                            <label for="" class="text-danger text-alert">El precio compra es requerido</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputSalePrice" class="label"><span class="text-danger">* </span>Precio Venta</label>
+                        <input type="number" nbInput fullWidth id="inputSalePrice" placeholder="Precio venta"
+                               formControlName="salePrice" [status]="isValidField('salePrice') ? 'danger' : 'basic'">
+                        <div [ngClass]="isValidField('salePrice') ? '' : 'd-none'">
+                            <label for="" class="text-danger text-alert">El precio venta es requerido</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Price Sales XM & Discount -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputSalePriceM" class="label">Precio Venta/Mayor</label>
+                        <input type="number" nbInput fullWidth id="inputSalePriceM" placeholder="Precio venta por mayor"
+                               formControlName="wholesalePrice">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputDiscount" class="label">Descuento</label>
+                        <input type="number" nbInput fullWidth id="inputDiscount" placeholder="Descuento"
+                               formControlName="discount">
+                    </div>
+                </div>
+            </div>
+            <!-- Expiration & Date -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="checkExpiration" class="label">Vencimiento</label>
+                    <nb-radio-group formControlName="expiration">
+                        <nb-radio
+                          [value]="1">
+                          Si
+                        </nb-radio>
+                        <nb-radio
+                          [value]="0">
+                          No
+                        </nb-radio>
+                    </nb-radio-group>
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputDateExpiration" class="label">Fecha Vencimiento</label>
+                    <div class="form-group">
+                        <input nbInput
+                            placeholder="Fecha de vencimiento"
+                            [nbDatepicker]="formpicker" style="width: 100%; max-width: 100%;"
+                            formControlName="expirationDate">
+                        <nb-datepicker #formpicker ></nb-datepicker>
+                    </div>
+                </div>
+            </div>
+            <!-- Warranty & Duration -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWarranty" class="label">Garantía</label>
+                        <input type="number" nbInput fullWidth id="inputWarranty" placeholder="Cantidad"
+                               formControlName="warranty">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputDuration" class="label">Duracion</label>
+                    <div class="form-group">
+                        <nb-select id="inputDuration" style="width: 100%; max-width: 100%;"
+                                   formControlName="duration">
+                            <nb-option value="0">N/A</nb-option>
+                            <nb-option value="Dias">Dias</nb-option>
+                            <nb-option value="Semanas">Semanas</nb-option>
+                            <nb-option value="Mes">Mes</nb-option>
+                            <nb-option value="Año">Año</nb-option>
+                        </nb-select>
+                    </div>
+                </div>
+            </div>
+            <!-- Supplier & Category -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="inputSupplier" class="label"><span class="text-danger">* </span>Proveedor</label>
+                    <div class="form-group">
+                        <nb-select id="inputSupplier" style="width: 100%; max-width: 100%;" placeholder="Selecciona un proveedor"
+                                   formControlName="supplierId" [status]="isValidField('supplierId') ? 'danger' : 'basic'">
+                            <nb-option *ngFor="let item of supplierSvc.$suppliers" [value]="item?.id">
+                                {{ item?.businessName }}
+                            </nb-option>
+                        </nb-select>
+                        <div [ngClass]="isValidField('supplierId') ? '' : 'd-none'">
+                            <label for="" class="text-danger text-alert">El proveedor es requerido</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputCategory" class="label"><span class="text-danger">* </span>Categoría</label>
+                    <div class="form-group">
+                        <nb-select id="inputCategory" style="width: 100%; max-width: 100%;" placeholder="Selecciona una categoría"
+                                   formControlName="categoryId" [status]="isValidField('categoryId') ? 'danger' : 'basic'">
+                            <nb-option *ngFor="let item of categorySvc.$categories" [value]="item?.id">
+                                {{ item?.name }}
+                            </nb-option>
+                        </nb-select>
+                        <div [ngClass]="isValidField('categoryId') ? '' : 'd-none'">
+                            <label for="" class="text-danger text-alert">La categoría es requerida</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Model & Mark -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="inputModel" class="label">Modelo</label>
+                    <div class="form-group">
+                        <nb-select id="inputModel" style="width: 100%; max-width: 100%;" placeholder="Selecciona un modelo"
+                                   formControlName="modelId">
+                            <nb-option *ngFor="let item of modelSvc.$models" [value]="item?.id">
+                                {{ item?.name }}
+                            </nb-option>
+                        </nb-select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="inputMark" class="label">Marca</label>
+                    <div class="form-group">
+                        <nb-select id="inputMark" style="width: 100%; max-width: 100%;" placeholder="Selecciona una Marca"
+                                   formControlName="markId">
+                            <nb-option *ngFor="let item of markSvc.$marks" [value]="item?.id">
+                                {{ item?.name }}
+                            </nb-option>
+                        </nb-select>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button nbButton status="primary" outline class="float-right" size="small" [disabled]="!productForm.valid" (click)="save()"> 
+                Guardar
+            </button>
+            <button nbButton status="danger" outline class="float-right mr-4" size="small" (click)="onReset()">
+                Cancelar
+            </button>
+        </form>
+    </nb-card-body>
+</nb-card>

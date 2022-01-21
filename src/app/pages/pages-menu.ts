@@ -22,6 +22,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'keypad-outline',
     link: '/pages/products',
   },
+  {
+    title: 'Marks',
+    icon: 'keypad-outline',
+    link: '/pages/marks',
+  },
   // {
   //   title: 'FEATURES',
   //   group: true,

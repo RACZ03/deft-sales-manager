@@ -25,7 +25,7 @@ export class MarkService {
       { id: 3, name: 'mark 3', status: true, createdAt: 1, updatedAt: 1 },
       { id: 4, name: 'mark 4', status: true, createdAt: 1, updatedAt: 1 },
     ];
-    this.$marks = [...data];
+    return this.$marks = [...data];
   }
   
 }

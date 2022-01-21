@@ -1,0 +1,23 @@
+
+<div *ngIf="showModalNew">
+    <!-- <ngx-new-product [mark]="mark" (btnSave)="closeModel($event)"></ngx-new-product> -->
+</div>
+
+<nb-card *ngIf="!showModalNew">
+    <nb-card-header>
+      Marcas
+        <button nbButton status="primary" outline class="float-right" size="small"
+                        (click)="openModal()" title="Agregar marca">
+            <nb-icon icon="plus-outline"></nb-icon>
+            Nuevo
+        </button>
+    </nb-card-header>
+  
+    <nb-card-body>
+        
+        <ng2-smart-table [settings]="settings" [source]="source" #table
+                         (custom)="onSelect($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+
+</nb-card>
