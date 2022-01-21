@@ -1,30 +1,30 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { NbDialogService } from '@nebular/theme';
-import { NewCategoryComponent } from './new/new.component';
-import { CategoryI } from '../../../interfaces/category';
-import { CategoryService } from '../../../services/category.service';
-import { ModalDeleteComponent } from '../../../components/modal-delete/modal-delete.component';
+import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
+import { ModelI } from '../../../interfaces/model';
 import { ToastrService } from '../../../services/toastr.service';
+import { ModelService } from '../../../services/model.service';
+import { ModalDeleteComponent } from '../../../components/modal-delete/modal-delete.component';
+import { NewModelComponent } from './new/new.component';
 
 @Component({
-  selector: 'ngx-categories',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss'],
+  selector: 'ngx-models',
+  templateUrl: './models.component.html',
+  styleUrls: ['./models.component.scss'],
 })
-export class CategoriesComponent implements OnInit {
+export class ModelsComponent implements OnInit {
 
-  @ViewChild('tableCategory') table: Ng2SmartTableComponent;
+  @ViewChild('tableModel') table: Ng2SmartTableComponent;
 
   public settings = {
     sort: true,
     // hideSubHeader: true,
     mode: 'external',
     edit: {
-      editButtonContent: '<i class="nb-edit"></i>'
+      editButtonContent: '<i class="nb-edit"></i>',
     },
     delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
+      deleteButtonContent: '<i class="nb-arrow-retweet"></i>',
       confirmDelete: true,
     },
     pager: {
@@ -37,35 +37,31 @@ export class CategoriesComponent implements OnInit {
       add: false,
       edit: true,     //  if you want to remove edit button
       delete: true, //  if you want to remove delete button
-      position: 'right'
+      position: 'right',
     },
     columns: {
       id: {
         title: 'Id',
-        type: 'number'
+        type: 'number',
       },
       name: {
         title: 'Nombre',
         type: 'string',
       },
-      ubication: {
-        title: 'Ubicación',
-        type: 'string',
-      },
       statusText: {
         title: 'Estado',
         type: 'string',
-      }
+      },
     },
   };
 
   public source: LocalDataSource = new LocalDataSource();
-  public data: CategoryI[] = [];
+  public data: ModelI[] = [];
 
   constructor(
     private dialogSvc: NbDialogService,
     private toastrSVC: ToastrService,
-    private categorySvc: CategoryService,
+    private modelSvc: ModelService,
   ) {
     this.loadTable(false);
   }
@@ -77,14 +73,14 @@ export class CategoriesComponent implements OnInit {
   }
 
   loadTable(band: boolean) { // Remove flag when integrating the api
-    this.data = this.categorySvc.getAll(band);
+    this.data = this.modelSvc.getAll(band);
     this.source.load(this.data);
   }
 
   onDelete(event): void {
     const id = event['data'].id;
-    const question: string = event['data'].status ? 'Desea desactivar la categoría' : 'Desea activar la categoría';
-    const message: string = event['data'].status ? 'Categoría desactivada correctamente' : 'Categoría habilitada correctamente';
+    const question: string = event['data'].status ? 'Desea desactivar el modelo' : 'Desea activar el modelo';
+    const message: string = event['data'].status ? 'Modelo desactivado correctamente' : 'Modelo habilitado correctamente';
     this.dialogSvc.open(ModalDeleteComponent,
                     {
                       context: {
@@ -94,12 +90,12 @@ export class CategoriesComponent implements OnInit {
                   )
                   .onClose.subscribe(resp => {
                     if ( resp ) {
-                      this.categorySvc.delete(id).subscribe( resp => {
+                      this.modelSvc.delete(id).subscribe( resp => {
                         if ( resp.code === 200) {
                           this.toastrSVC.showToast('success', 'topR', 'Accion exitosa', 3000, message);
                           this.loadTable(true);
                         } else {
-                          this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se pudo activa/desactivar la categoría');
+                          this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se pudo activa/desactivar el modelo');
                         }
                       });
                     }
@@ -108,15 +104,14 @@ export class CategoriesComponent implements OnInit {
   }
 
   openModalNew( e? ) {
-    const category = e?.data;
-    this.dialogSvc.open(NewCategoryComponent, {
+    const model = e?.data;
+    this.dialogSvc.open(NewModelComponent, {
       context: {
-        category,
+        model,
       },
     }).onClose.subscribe( resp => {
       this.loadTable(true);
     });
   }
-
 
 }

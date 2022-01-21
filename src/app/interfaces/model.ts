@@ -5,3 +5,8 @@ export interface ModelI {
     createdAt: Number;
     updatedAt: Number;
 }
+export type NewModelI = Pick<ModelI, 'name'>;
+
+export interface DataModelI extends ModelI {
+    statusText: String;
+}

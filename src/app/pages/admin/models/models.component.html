@@ -7,12 +7,12 @@
         </button>
 
         <h6 class="mt-2">
-            Categorias
+            Modelos
         </h6>
     </nb-card-header>
   
     <nb-card-body>
-        <ng2-smart-table [settings]="settings" [source]="source"  #tableCategory
+        <ng2-smart-table [settings]="settings" [source]="source"  #tableModel
                         (delete)="onDelete($event)" (edit)="openModalNew($event)">
         </ng2-smart-table>
     </nb-card-body>

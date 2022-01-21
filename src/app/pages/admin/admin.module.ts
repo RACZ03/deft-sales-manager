@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
@@ -16,6 +17,8 @@ import { NewUserComponent } from './users/new/new.component';
 import { CustomersComponent } from './customers/customers.component';
 import { SupplierComponent } from './supplier/supplier.component';
 import { UsersComponent } from './users/users.component';
+import { ModelsComponent } from './models/models.component';
+import { NewModelComponent } from './models/new/new.component';
 
 
 
@@ -27,23 +30,25 @@ import { UsersComponent } from './users/users.component';
     CustomersComponent,
     SupplierComponent,
     UsersComponent,
+    ModelsComponent,
     NewBoxComponent,
     NewCategoryComponent,
     NewCustomerComponent,
     NewSupplierComponent,
     NewUserComponent,
+    NewModelComponent,
   ],
   imports: [
-    FormsModule,
-    ReactiveFormsModule,
+    CommonModule,
     AdminRoutingModule,
     ThemeModule,
+    ReactiveFormsModule,
     NbCardModule,
     NbInputModule,
     NbButtonModule,
     Ng2SmartTableModule,
     NbIconModule,
-    NbSelectModule
-  ]
+    NbSelectModule,
+  ],
 })
 export class AdminModule { }

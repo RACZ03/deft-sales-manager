@@ -60,6 +60,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         icon: 'people-outline',
         link: '/pages/admin/customers',
       },
+      {
+        title: 'Models',
+        icon: 'grid-outline',
+        link: '/pages/admin/models',
+      },
     ],
   },
   {

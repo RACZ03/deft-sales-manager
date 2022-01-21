@@ -8,24 +8,18 @@
         </h6>
     </nb-card-header>
     <nb-card-body>
-        <form  novalidate [formGroup]="categoryForm">
+        <form  novalidate [formGroup]="modelForm">
             <!-- Name -->
             <div class="form-group">
                 <label for="inputName" class="label"><span class="text-danger">* </span>Nombre</label>
                 <input type="text" nbInput fullWidth id="inputName" placeholder="Nombre"
                                formControlName="name" [status]="isValidField('name') ? 'danger' : 'basic'">
                 <div [ngClass]="isValidField('name') ? '' : 'd-none'">
-                    <label for="" class="text-danger text-alert">El nombre de la categoría es requerido</label>
+                    <label for="" class="text-danger text-alert">El nombre del modelo es requerido</label>
                 </div>
             </div>
-            <!-- Ubication -->
-            <div class="form-group">
-                <label for="inputUbication" class="label">Ubicaci&oacute;n</label>
-                <input type="text" nbInput fullWidth id="inputName" placeholder="Ubicacián"
-                               formControlName="ubication">
-            </div>
             <br>
-            <button nbButton status="primary" outline class="float-right" size="small" [disabled]="!categoryForm.valid" (click)="save()"> 
+            <button nbButton status="primary" outline class="float-right" size="small" [disabled]="!modelForm.valid" (click)="save()"> 
                 Guardar
             </button>
             <button nbButton status="danger" outline class="float-right mr-4" size="small" (click)="onClose()">
