@@ -33,7 +33,9 @@ export class NewComponent implements OnInit {
   ngOnInit(): void {
     if ( this.mark !== undefined && this.mark?.id > 0 ) {
       const copy = {...this.mark};
+      //eliminar propiedades que no van en el form
       delete copy.id;
+      delete copy.status;
       this.markForm.setValue(copy);
     }
   }
@@ -41,9 +43,12 @@ export class NewComponent implements OnInit {
   save() {
     const newMark: MarkI = {
       id: this.mark?.id,
-      status: true,
+      //mandar status cuando se edita
+      status: this.mark?.status,
       ...this.markForm.value,
     };
+    console.log(newMark)
+   
     this.markSvc.createAndUpdate(newMark).subscribe( resp => {
       if ( resp.code === 200 ) {
         const message = newMark?.id === undefined ? 'Marca agregada' : 'Actualización realizada';

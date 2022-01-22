@@ -9,19 +9,19 @@ import { MarkI } from '../interfaces/mark';
   providedIn: 'root'
 })
 export class MarkService {
-  
+
   private URL = environment.URL;
   public $marks: MarkI[] = []
 
   constructor(
     private http: HttpClient
-  ) { 
+  ) {
     this.getAll(false);
   }
 
   getAll(band: boolean) {
     // return this.http.get( `${ this.URL }/mark`);
-    if ( band ) {
+    if (band) {
       return this.$marks;
     }
     const data: MarkI[] = [
@@ -33,25 +33,42 @@ export class MarkService {
     return this.$marks = [...data];
   }
 
+  changeStatus(id: Number): Observable<any> {
+    const resp: ResponseI = {
+      code: 200,
+      message: 'Success',
+      data: [],
+    };
+    // change
+    const brand = this.$marks.find(e => e.id === id);
+    brand.status = !brand.status;
+
+    // example
+    return new Observable(subscribe => subscribe.next(resp));
+  }
+
+
   createAndUpdate(mark: MarkI): Observable<any> {
     const resp: ResponseI = {
       code: 200,
       message: 'Success',
       data: [],
     };
-    if ( mark.id === null || mark.id === undefined ) {
+    if (mark.id === null || mark.id === undefined) {
       mark.id = this.$marks.length + 1;
+      //setear estado por defecto cuando se crea nueva marca
+      mark.status = true;
       this.$marks.push(mark);
     } else {
       // update
-      const indice = this.$marks.findIndex( e => e.id === mark.id);
-      if ( indice >= 0) {
+      const indice = this.$marks.findIndex(e => e.id === mark.id);
+      if (indice >= 0) {
         this.$marks[indice] = { ...mark };
       }
     }
 
     // example
-    return new Observable( subscribe => subscribe.next(resp) );
+    return new Observable(subscribe => subscribe.next(resp));
   }
 
   delete(id: number): Observable<any> {
@@ -60,13 +77,13 @@ export class MarkService {
       message: 'Success',
       data: [],
     };
-    const newData = this.$marks.filter( e => e.id !== id);
+    const newData = this.$marks.filter(e => e.id !== id);
     this.$marks = [...newData];
     // example
-    return new Observable( subscribe => subscribe.next(resp) );
+    return new Observable(subscribe => subscribe.next(resp));
   }
 
 
- 
-  
+
+
 }

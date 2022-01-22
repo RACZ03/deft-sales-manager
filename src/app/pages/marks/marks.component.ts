@@ -3,6 +3,7 @@ import { LocalDataSource, Ng2SmartTableComponent } from 'ng2-smart-table';
 import { ToastrService } from '../../services/toastr.service';
 import { MarkService } from '../../services/mark.service';
 import { NbDialogService } from '@nebular/theme';
+import { ModalChangeStatusComponent } from '../../components/modal-change-status/modal-change-status.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
 import { MarkI } from '../../interfaces/mark';
 
@@ -40,10 +41,10 @@ export class MarksComponent implements OnInit {
       delete: false, //  if you want to remove delete button
       position: 'right',
       custom: [ // Custom buttons
-        // {
-        //   name: 'see',
-        //   title: '<i class="nb-keypad" title="Ver"></i>',
-        // },
+        {
+          name: 'change',
+          title: '<i class="nb-checkmark" title="Cambiar estado"></i>',
+        },
         {
           name: 'edit',
           title: '<i class="nb-edit" title="Editar"></i>',
@@ -74,7 +75,7 @@ export class MarksComponent implements OnInit {
     private markSvc: MarkService,
     private dialogSvc: NbDialogService,
   ) {
-     this.loadTable(false);
+    this.loadTable(false);
   }
 
   ngOnInit() {
@@ -85,42 +86,30 @@ export class MarksComponent implements OnInit {
 
   loadTable(band: boolean) { // Remove flag when integrating the api
     this.data = this.markSvc.getAll(band);
-    this.data = [ ...this.data ];
+    this.data = [...this.data];
     this.source.load(this.data);
   }
-  onSelect(e: any) {
-    // Datatable custom actions
-    if (e.action === 'edit') {
-      this.openModal(e);
-    } else {
-      this.onDelete(e);
-    }
-  }
-
-
-  onDelete(e): void {
-
+  changeStatus(e: any) {
+    // Show modal change status
     const id = e['data'].id;
-    this.dialogSvc.open(ModalDeleteComponent)
-                  .onClose.subscribe(resp => {
-                    if ( resp ) {
-                      this.markSvc.delete(id).subscribe( resp => {
-                        if ( resp.code === 200) {
-                          this.toastrSVC.showToast('success', 'topR', 'Accion exitosa', 3000, 'Marca eliminada');
-                          this.loadTable(true);
-                        } else {
-                          this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se elimino la marca');
-                        }
-                      });
-                    }
-                  });
-
+    this.dialogSvc.open(ModalChangeStatusComponent)
+      .onClose.subscribe(resp => {
+        if (resp) {
+          this.markSvc.changeStatus(id).subscribe(resp => {
+            if (resp.code === 200) {
+              this.toastrSVC.showToast('success', 'topR', 'Accion exitosa', 3000, 'Estado cambiado');
+              this.loadTable(true);
+            } else {
+              this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se cambió el estado');
+            }
+          });
+        }
+      });
   }
 
   openModal(e?) {
     // If it is edition, assign value
     this.mark = e?.data;
-    delete this.mark?.status;
     delete this.mark?.createdAt;
     delete this.mark?.updatedAt;
 
@@ -128,8 +117,38 @@ export class MarksComponent implements OnInit {
     this.showModalNew = !this.showModalNew;
   }
 
+  onSelect(e: any) {
+    // Datatable custom actions
+    if (e.action === 'change') {
+      this.changeStatus(e);
+    } else if (e.action === 'edit') {
+      this.openModal(e);
+    } else {
+      this.onDelete(e);
+    }
+  }
+
+  onDelete(e): void {
+    //delete data
+    const id = e['data'].id;
+    this.dialogSvc.open(ModalDeleteComponent)
+      .onClose.subscribe(resp => {
+        if (resp) {
+          this.markSvc.delete(id).subscribe(resp => {
+            if (resp.code === 200) {
+              this.toastrSVC.showToast('success', 'topR', 'Accion exitosa', 3000, 'Marca eliminada');
+              this.loadTable(true);
+            } else {
+              this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se eliminó la marca');
+            }
+          });
+        }
+      });
+
+  }
+
   closeModal(e?) {
-    if ( e ) {
+    if (e) {
       // Update data
       this.loadTable(true);
     }
