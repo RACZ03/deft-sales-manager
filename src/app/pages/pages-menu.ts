@@ -1,5 +1,6 @@
 import { NbMenuItem } from '@nebular/theme';
 
+// la lib de icons es Eva icons
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Home',
@@ -19,12 +20,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Products',
-    icon: 'keypad-outline',
+    icon: 'keypad-outline', 
     link: '/pages/products',
   },
   {
-    title: 'Marks',
-    icon: 'keypad-outline',
+    title: 'Brands',
+    icon: 'flag-outline',
     link: '/pages/marks',
   },
   // {

@@ -17,7 +17,7 @@ export class MarksComponent implements OnInit {
   public showModalNew: boolean = false;
 
   public data: MarkI[] = [];
-  //public mark: MarkI;
+  public mark: MarkI;
   public settings = {
     sort: true,
     // hideSubHeader: true,
@@ -40,10 +40,10 @@ export class MarksComponent implements OnInit {
       delete: false, //  if you want to remove delete button
       position: 'right',
       custom: [ // Custom buttons
-        {
-          name: 'see',
-          title: '<i class="nb-keypad" title="Ver"></i>',
-        },
+        // {
+        //   name: 'see',
+        //   title: '<i class="nb-keypad" title="Ver"></i>',
+        // },
         {
           name: 'edit',
           title: '<i class="nb-edit" title="Editar"></i>',
@@ -74,7 +74,7 @@ export class MarksComponent implements OnInit {
     private markSvc: MarkService,
     private dialogSvc: NbDialogService,
   ) {
-     this.loadTable();
+     this.loadTable(false);
   }
 
   ngOnInit() {
@@ -83,60 +83,57 @@ export class MarksComponent implements OnInit {
     }, 100);
   }
 
-  loadTable() { // Remove flag when integrating the api
-    this.data = this.markSvc.getAll();
+  loadTable(band: boolean) { // Remove flag when integrating the api
+    this.data = this.markSvc.getAll(band);
     this.data = [ ...this.data ];
     this.source.load(this.data);
   }
-
-  // onSelect(e: any) {
-  //   // Datatable custom actions
-  //   if ( e.action === 'see') {
-  //     this.show(e);
-  //   } else if (e.action === 'edit') {
-  //     this.openModal(e);
-  //   } else {
-  //     this.onDelete(e);
-  //   }
-  // }
+  onSelect(e: any) {
+    // Datatable custom actions
+    if (e.action === 'edit') {
+      this.openModal(e);
+    } else {
+      this.onDelete(e);
+    }
+  }
 
 
-  // onDelete(e): void {
+  onDelete(e): void {
 
-  //   const id = e['data'].id;
-  //   this.dialogSvc.open(ModalDeleteComponent)
-  //                 .onClose.subscribe(resp => {
-  //                   if ( resp ) {
-  //                     this.productSvc.delete(id).subscribe( resp => {
-  //                       if ( resp.code === 200) {
-  //                         this.toastrSVC.showToast('success', 'topR', 'Accion exitosa', 3000, 'Producto eliminado');
-  //                         this.loadTable(true);
-  //                       } else {
-  //                         this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se elimino el producto');
-  //                       }
-  //                     });
-  //                   }
-  //                 });
+    const id = e['data'].id;
+    this.dialogSvc.open(ModalDeleteComponent)
+                  .onClose.subscribe(resp => {
+                    if ( resp ) {
+                      this.markSvc.delete(id).subscribe( resp => {
+                        if ( resp.code === 200) {
+                          this.toastrSVC.showToast('success', 'topR', 'Accion exitosa', 3000, 'Marca eliminada');
+                          this.loadTable(true);
+                        } else {
+                          this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se elimino la marca');
+                        }
+                      });
+                    }
+                  });
 
-  // }
+  }
 
-  // openModal(e?) {
-  //   // If it is edition, assign value
-  //   this.product = e?.data;
-  //   delete this.product?.status;
-  //   delete this.product?.createdAt;
-  //   delete this.product?.updatedAt;
+  openModal(e?) {
+    // If it is edition, assign value
+    this.mark = e?.data;
+    delete this.mark?.status;
+    delete this.mark?.createdAt;
+    delete this.mark?.updatedAt;
 
-  //   // show modal
-  //   this.showModalNew = !this.showModalNew;
-  // }
+    // show modal
+    this.showModalNew = !this.showModalNew;
+  }
 
-  // closeModel(e?) {
-  //   if ( e ) {
-  //     // Update data
-  //     this.loadTable(true);
-  //   }
-  //   this.showModalNew = !this.showModalNew;
-  // }
+  closeModal(e?) {
+    if ( e ) {
+      // Update data
+      this.loadTable(true);
+    }
+    this.showModalNew = !this.showModalNew;
+  }
 
 }

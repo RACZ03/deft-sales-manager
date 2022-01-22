@@ -1,16 +1,12 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ProductService } from '../../../services/product.service';
 import { ToastrService } from '../../../services/toastr.service';
-import { PresentationService } from '../../../services/presentation.service';
-import { CategoryService } from '../../../services/category.service';
-import { SupplierService } from '../../../services/supplier.service';
 import { MarkService } from '../../../services/mark.service';
-import { ModelService } from '../../../services/model.service';
-import { ProductI } from '../../../interfaces/product';
+
+import { MarkI } from '../../../interfaces/mark';
 
 @Component({
-  selector: 'ngx-new-product',
+  selector: 'ngx-new-mark',
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.scss'],
 })
@@ -18,78 +14,55 @@ export class NewComponent implements OnInit {
 
   public valueExpiration = 1;
   public valueWarranty = 0;
-  public title: string = 'Nuevo Producto';
+  public title: string = 'Nueva Marca';
 
   @Output() btnSave = new EventEmitter<boolean>();
-  @Input() product: ProductI;
+  @Input() mark: MarkI;
 
-  public code: Number = parseInt(this.productSvc.getCode(), 0);
-  public productForm = this.fb.group({
-    code: [{value: this.code, disabled: true}, Validators.required ],
+  public markForm = this.fb.group({
     name: ['', Validators.required],
-    description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(100)] ],
-    stock: [ null, Validators.required ],
-    presentationId: [null],
-    purchasePrice: [ null, Validators.required ],
-    salePrice: [ null, Validators.required],
-    wholesalePrice: [],
-    discount: [],
-    expiration: [0],
-    expirationDate: [''],
-    warranty: [''],
-    duration: ['0'],
-    supplierId: [null, Validators.required ],
-    categoryId: [null, Validators.required ],
-    modelId: [null],
-    markId: [null],
   });
 
   constructor(
     private fb: FormBuilder,
-    private productSvc: ProductService,
     private toastrSVC: ToastrService,
-    public presentationSvc: PresentationService,
-    public categorySvc: CategoryService,
-    public supplierSvc: SupplierService,
     public markSvc: MarkService,
-    public modelSvc: ModelService,
   ) {
   }
 
   ngOnInit(): void {
-    if ( this.product !== undefined && this.product?.id > 0 ) {
-      const copy = {...this.product};
+    if ( this.mark !== undefined && this.mark?.id > 0 ) {
+      const copy = {...this.mark};
       delete copy.id;
-      this.productForm.setValue(copy);
+      this.markForm.setValue(copy);
     }
   }
 
   save() {
-    const newProduct: ProductI = {
-      id: this.product?.id,
-      code: this.code,
-      ...this.productForm.value,
+    const newMark: MarkI = {
+      id: this.mark?.id,
+      status: true,
+      ...this.markForm.value,
     };
-
-    this.productSvc.createAndUpdate(newProduct).subscribe( resp => {
+    this.markSvc.createAndUpdate(newMark).subscribe( resp => {
       if ( resp.code === 200 ) {
-        const message = newProduct?.id === undefined ? 'Producto agregado' : 'Actualizacion realizada';
+        const message = newMark?.id === undefined ? 'Marca agregada' : 'Actualización realizada';
 
         this.toastrSVC.showToast('success', 'topR', 'Éxito', 3000, message);
       } else {
-        this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se registro el producto');
+        this.toastrSVC.showToast('danger', 'topR', 'Error', 3000, 'No se registro la marca');
       }
       this.btnSave.emit(true);
     });
   }
 
   onReset(): void {
-    this.productForm.reset();
+    this.markForm.reset();
     this.btnSave.emit(false);
   }
 
   isValidField(name: string): boolean {
-    const fieldName = this.productForm.get(name);
+    const fieldName = this.markForm.get(name);
     return (fieldName.invalid && fieldName.touched) ? true : false;
   }
 

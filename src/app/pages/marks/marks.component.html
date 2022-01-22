@@ -1,6 +1,6 @@
 
 <div *ngIf="showModalNew">
-    <!-- <ngx-new-product [mark]="mark" (btnSave)="closeModel($event)"></ngx-new-product> -->
+    <ngx-new-mark [mark]="mark" (btnSave)="closeModal($event)"></ngx-new-mark>
 </div>
 
 <nb-card *ngIf="!showModalNew">
